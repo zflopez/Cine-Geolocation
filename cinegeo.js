@@ -34,33 +34,42 @@ function onLocation(position){
 	});
 
 	var storedCinemas = JSON.parse(window.localStorage.getItem('cinemas')) || {};
+	var nearestCinema;
+	var nearestCinemaDistance = Infinity;
 
-/*
-	window.localStorage.getItem();
-	foreach array
-		distance
-		menor guardamos
-	locations = menor distancia
+	for(cinemaIndex in storedCinemas){
+		console.log(storedCinemas[cinemaIndex].name);
+		var distanceAux = distance(position.coords.latitude, position.coords.longitude, storedCinemas[cinemaIndex].latitude, storedCinemas[cinemaIndex].longitude, "km");
+		
+		if(distanceAux < nearestCinemaDistance){
+			nearestCinema = storedCinemas[cinemaIndex];
+		}
+	}
+
+	console.log(nearestCinema.name);
 
 	var locations = [
-	['You', position.coords.latitude, position.coords.longitude, 4]
+	['You', position.coords.latitude, position.coords.longitude],
+	[nearestCinema.name, nearestCinema.latitude, nearestCinema.longitude]
 	];
-
 	var infowindow = new google.maps.InfoWindow();
 	var marker, i;
 
 	for (i = 0; i < locations.length; i++) {
+		console.log(locations[i][1]);
 		marker = new google.maps.Marker({
 			position: new google.maps.LatLng(locations[i][1], locations[i][2]),
-			map: map
+			map: map,
+			icon: 'https://maps.google.com/mapfiles/kml/shapes/' + 'schools_maps.png'
 		});
+
 		google.maps.event.addListener(marker, 'click', (function(marker, i) {
 			return function() {
 				infowindow.setContent(locations[i][0]);
 				infowindow.open(map, marker);
 			}
 		})(marker, i));
-	}*/
+	}
 }
 
 function onError (error) {
