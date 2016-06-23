@@ -1,5 +1,5 @@
 var options = {
-	enableHighAccuracy: true 
+	enableHighAccuracy: true
 };
 
 function getData() {
@@ -32,7 +32,16 @@ function onLocation(position){
 		center: new google.maps.LatLng(position.coords.latitude,position.coords.longitude),
 		mapTypeId: google.maps.MapTypeId.ROADMAP
 	});
+
+	var storedCinemas = JSON.parse(window.localStorage.getItem('cinemas')) || {};
+
 /*
+	window.localStorage.getItem();
+	foreach array
+		distance
+		menor guardamos
+	locations = menor distancia
+
 	var locations = [
 	['You', position.coords.latitude, position.coords.longitude, 4]
 	];
